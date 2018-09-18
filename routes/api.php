@@ -18,4 +18,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-Route::get('webhook-handler', 'WebhookInputController@receiveWebhookInput');
+Route::any('webhook-handler', 'WebhookInputController@receiveWebhookInput');
