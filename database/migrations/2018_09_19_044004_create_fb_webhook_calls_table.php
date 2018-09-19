@@ -16,7 +16,7 @@ class CreateFbWebhookCallsTable extends Migration
         Schema::create('fb_webhook_calls', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('brand_id');
-            $table->foreign('brand_id')->references('id')->on('brands');;
+            $table->foreign('brand_id')->references('id')->on('brands')->nullable();
             $table->string('user_ref');
             $table->json('payload');
             $table->boolean('message_sent');
