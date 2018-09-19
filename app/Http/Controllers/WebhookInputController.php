@@ -28,7 +28,7 @@ class WebhookInputController extends Controller
         $fb_payload_obj = \App\Model\WebhookDump::insert([
             "brand_id" => $brand_id,
             "user_ref" => $payload_obj->user_ref,
-            "payload" => $payload_obj,
+            "payload" => json_encode($payload_obj),
             "message_sent" => 0
         ]);
 
