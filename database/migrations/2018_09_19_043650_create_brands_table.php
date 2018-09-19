@@ -18,7 +18,8 @@ class CreateBrandsTable extends Migration
             $table->string('brand_name');
             $table->boolean('active');
             $table->string('brand_access_token');
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
         });
     }
 
