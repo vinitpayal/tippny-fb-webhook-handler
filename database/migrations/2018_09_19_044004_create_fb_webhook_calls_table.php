@@ -20,6 +20,7 @@ class CreateFbWebhookCallsTable extends Migration
             $table->string('user_ref');
             $table->json('payload');
             $table->boolean('message_sent');
+            $table->boolean('sent_message_id')->nullable();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
         });
