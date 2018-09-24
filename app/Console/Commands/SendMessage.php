@@ -60,11 +60,57 @@ class SendMessage extends Command
             ]
         ];
 
-        foreach ($users_list_to_send_message as $fb_webhook_response){
+        foreach ($users_list_to_send_message as $fb_webhook_response) {
 
-            $payload = json_decode($fb_webhook_response['payload']);
+            $intro_msg_sent = $this->send_introduction_message($fb_webhook_response['brand_id'], $fb_webhook_response->user_ref);
 
-            $curr_msg_payload = $this->get_payload_data($payload, $genericPayload);
+            // sent promotional msg only after sending intro msg
+            if ($intro_msg_sent) {
+
+                $payload = json_decode($fb_webhook_response['payload']);
+
+                $curr_msg_payload = $this->get_payload_data($payload, $genericPayload);
+
+                $client = new Client();
+
+                $access_token = env("FB_PAGE_ACCESS_TOKEN");
+
+                $fb_page_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=' . $access_token;
+
+                $response = $client->request('POST', $fb_page_url, ['json' => $curr_msg_payload]);
+
+                if ($response->getStatusCode() == 200) {
+                    $send_res = json_decode($response->getBody());
+                    $message_id = $send_res->message_id;
+
+                    $fb_webhook_response->message_sent = 1;
+                    $fb_webhook_response->sent_message_id = $message_id;
+
+                    $fb_webhook_response->save();
+                }
+            }
+        }
+    }
+
+    public function send_introduction_message($brand_id, $user_ref){
+        $brand_obj =  \App\Model\Brand::where('active', 1)->find($brand_id);
+
+        if($brand_obj){
+            $brand_communicator_name = ucfirst(strtolower($brand_obj->brand_communicator_person_name));
+
+            $text_message = sprintf("Hello, this is %s from %s. Thank you for subscribing to notifications via"
+                ." our partner Tippny.", $brand_communicator_name, $brand_obj->brand_name);
+
+            $recepient_obj = new \stdClass();
+            $recepient_obj->user_ref = $user_ref;
+
+            $msg_obj = new \stdClass();
+            $msg_obj->text = $text_message;
+
+            $text_msg_payload = [
+                "recipient" => $recepient_obj,
+                "message" =>  $msg_obj
+            ];
 
             $client = new Client();
 
@@ -72,22 +118,18 @@ class SendMessage extends Command
 
             $fb_page_url = 'https://graph.facebook.com/v2.6/me/messages?access_token='.$access_token;
 
-            $response = $client->request('POST', $fb_page_url, ['json' => $curr_msg_payload]);
+            $response = $client->request('POST', $fb_page_url, ['json' => $text_msg_payload]);
 
-            if($response->getStatusCode() == 200){
-                $send_res = json_decode($response->getBody());
-                $message_id = $send_res->message_id;
-
-                $fb_webhook_response->message_sent = 1;
-                $fb_webhook_response->sent_message_id = $message_id;
-
-                $fb_webhook_response->save();
+            if($response->getStatusCode() == 200) {
+                return true;
             }
 
-
-
+            else {
+                Log::error("Ufff!!! error in sending introduction message");
+                Log::error($response->getBody());
+                return false;
+            }
         }
-
     }
 
     public function get_payload_data($fbPayloadObj, $genericPayload){
