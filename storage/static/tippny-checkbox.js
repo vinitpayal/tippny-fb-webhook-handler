@@ -35,7 +35,7 @@ $(document).ready(function() {
     });
 });
 
-function tippnySendCheckboxSelectionEventAfterClick() {
+function tippnySendCheckboxSelectionEventAfterClick(user_ref, ref) {
     // if FB is not defined some error so don't try to push event as it will be failed
     if(typeof FB != 'undefined') {
         FB.AppEvents.logEvent('MessengerCheckboxUserConfirmation', null, {
