@@ -1,5 +1,5 @@
 // setup facebook sdk on page load so that checkbox plugin can initiated
-$(document).ready(function() {
+window.addEventListener('load', function () {
     $.ajaxSetup({ cache: true });
     $.getScript('https://connect.facebook.net/en_US/sdk.js', function(){
         FB.init({
@@ -35,7 +35,7 @@ $(document).ready(function() {
     });
 });
 
-function tippnySendCheckboxSelectionEventAfterClick(user_ref, ref) {
+window.tippnySendCheckboxSelectionEventAfterClick = function(user_ref, ref) {
     // if FB is not defined some error so don't try to push event as it will be failed
     if(typeof FB != 'undefined') {
         FB.AppEvents.logEvent('MessengerCheckboxUserConfirmation', null, {
