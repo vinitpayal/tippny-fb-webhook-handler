@@ -36,10 +36,18 @@ window.addEventListener('load', function () {
 });
 
 window.tippnySendCheckboxSelectionEventAfterClick = function(user_ref, ref) {
-    console.log("---function to log function called -------");
+    console.log("---sending event to fb -----");
     // if FB is not defined some error so don't try to push event as it will be failed
     if(typeof FB != 'undefined') {
         FB.AppEvents.logEvent('MessengerCheckboxUserConfirmation', null, {
+            'app_id': '293870131126505',
+            'page_id': '2011137462500782',
+            "ref": JSON.stringify(ref),
+            'user_ref': user_ref
+        });
+
+        console.log("--in if and log event sent to fb ------");
+        console.log({
             'app_id': '293870131126505',
             'page_id': '2011137462500782',
             "ref": JSON.stringify(ref),
