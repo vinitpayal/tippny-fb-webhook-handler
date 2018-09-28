@@ -13,7 +13,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        'App\Console\Commands\SendMessage'
+        'App\Console\Commands\SendMessage',
+        'App\Console\Commands\SendPopupWelcomeMessage',
     ];
 
     /**
@@ -26,6 +27,9 @@ class Kernel extends ConsoleKernel
     {
          $schedule->command('message:cart-product')
              ->cron('* * * * * *')->withoutOverlapping();
+
+        $schedule->command('message:popup-welcome')
+            ->cron('* * * * * *')->withoutOverlapping();
     }
 
     /**
