@@ -15,6 +15,8 @@ class WebhookInputController extends Controller
         $brand_access_token = null;
         $brand_id = null;
 
+        $click_origin = 'add-to-cart';
+
         if(property_exists($payload_obj, 'access_token')){
             $brand_access_token = $payload_obj->access_token;
 
@@ -25,11 +27,15 @@ class WebhookInputController extends Controller
             $brand_id = $brands_list_with_access_token[0]->id;
         }
 
+        if(property_exists($payload_obj, 'origin')){
+            $click_origin = $payload_obj->origin;
+        }
 
         $fb_payload_obj = \App\Model\WebhookDump::insert([
             "brand_id" => $brand_id,
             "user_ref" => $payload_obj->user_ref,
             "payload" => json_encode($payload_obj),
+            "click_origin" => $click_origin,
             "message_sent" => 0
         ]);
 
