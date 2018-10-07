@@ -40,6 +40,7 @@ class SendPopupWelcomeMessage extends Command
      */
     public function handle()
     {
+        $try_count = 0;
         $delay_in_msg_sending = env('DELAY_IN_MESSAGE_SENDING', 60);
         $users_list_to_send_message = \App\Model\WebhookDump::whereNotNull('brand_id')
             ->where('message_sent', 0)
@@ -103,6 +104,13 @@ class SendPopupWelcomeMessage extends Command
                     $fb_webhook_response->save();
                 }
             }
+        }
+
+        $try_count += 1;
+
+        if($try_count <= 55){
+            sleep(1);
+            handle();
         }
     }
 
