@@ -6,6 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class WebhookDump extends Model
 {
-    protected $table = 'fb_webhook_calls';
+    protected $table = 'checkbox_option_payload';
     public $timestamps = false;
 }
