@@ -85,7 +85,7 @@ class SendPopupWelcomeMessage extends Command
 
                 $payload = json_decode($fb_webhook_response['payload']);
 
-                $brand_suscription_payload = ';brandid:'.fb_webhook_response['brand_id'];
+                $brand_suscription_payload = ';brandid:'.$fb_webhook_response['brand_id'];
 
                 if(property_exists($payload, 'brand_location_id')){
                     $brand_suscription_payload .= ";locationid:".$payload->brand_location_id;
