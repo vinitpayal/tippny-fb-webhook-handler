@@ -14,7 +14,7 @@ class WebhookInputController extends Controller
         Log::info("Payload");
         Log::info($payload_obj);
 
-        $ref_data = $payload_obj['optin']['ref'];
+        $ref_data = json_decode($payload_obj['optin']['ref']);
 
         Log::info("ref data");
         Log::info($ref_data);
