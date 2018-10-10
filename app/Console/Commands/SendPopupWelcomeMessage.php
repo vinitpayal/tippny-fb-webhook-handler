@@ -110,7 +110,7 @@ class SendPopupWelcomeMessage extends Command
 
         if($try_count <= 55){
             sleep(1);
-            handle();
+            $this->handle();
         }
     }
 
