@@ -41,6 +41,7 @@ class SendMessage extends Command
     public function handle()
     {
         $delay_in_msg_sending = env('DELAY_IN_CARD_ADD_AND_SEND_MESSSAGE', 60);
+	Log::info('delay:'+$delay_in_msg_sending);
         $users_list_to_send_message = \App\Model\WebhookDump::whereNotNull('brand_id')
             ->where('message_sent', 0)
             ->where('click_origin', 'add-to-cart')

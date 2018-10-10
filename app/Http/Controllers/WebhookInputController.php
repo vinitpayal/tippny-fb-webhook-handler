@@ -10,15 +10,16 @@ class WebhookInputController extends Controller
     public function receiveWebhookInput(Request $request){
         $input_data = $request->all();
 
-        $payload_obj = json_decode(json_decode($input_data['payload'], true));
-
-        Logging::info("Payload");
-        Logging::info($payload_obj);
+        $payload_obj = $input_data['payload'];
+        Log::info("Payload");
+        Log::info($payload_obj);
+	
+	return "success";
 
         $ref_data = $payload_obj['optin']['ref'];
 
-        Logging::info("ref data");
-        Logging::info($ref_data);
+        Log::info("ref data");
+        Log::info($ref_data);
 
         $brand_access_token = null;
         $brand_id = null;
