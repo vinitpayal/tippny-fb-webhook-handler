@@ -76,15 +76,24 @@ class SendPopupWelcomeMessage extends Command
         ];
 
         foreach ($users_list_to_send_message as $fb_webhook_response) {
-
-            $intro_msg_sent = $this->send_introduction_message($fb_webhook_response['brand_id'], $fb_webhook_response->user_ref);
+            
+            $brand_id = $fb_webhook_response['brand_id'];
+            $intro_msg_sent = $this->send_introduction_message($brand_id, $fb_webhook_response->user_ref);
 
             // sent promotional msg only after sending intro msg
             if ($intro_msg_sent) {
 
                 $payload = json_decode($fb_webhook_response['payload']);
 
+                $brand_suscription_payload = ';brandid:'.fb_webhook_response['brand_id'];
+
+                if(property_exists($payload, 'brand_location_id')){
+                    $brand_suscription_payload .= ";locationid:".$payload->brand_location_id;
+                }
+
                 $genericPayload['recipient'] = ["user_ref" => $payload->user_ref];
+                $genericPayload['message']['quick_replies'][0]['payload'].$brand_suscription_payload;
+                $genericPayload['message']['quick_replies'][1]['payload'].$brand_suscription_payload;
 
                 $client = new Client();
 
