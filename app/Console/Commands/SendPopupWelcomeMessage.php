@@ -92,8 +92,8 @@ class SendPopupWelcomeMessage extends Command
                 }
 
                 $genericPayload['recipient'] = ["user_ref" => $payload->user_ref];
-                $genericPayload['message']['quick_replies'][0]['payload'].$brand_suscription_payload;
-                $genericPayload['message']['quick_replies'][1]['payload'].$brand_suscription_payload;
+                $genericPayload['message']['quick_replies'][0]['payload'] .= $brand_suscription_payload;
+                $genericPayload['message']['quick_replies'][1]['payload'] .= $brand_suscription_payload;
 
                 $client = new Client();
 
