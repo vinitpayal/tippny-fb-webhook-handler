@@ -95,6 +95,9 @@ class SendPopupWelcomeMessage extends Command
                 $genericPayload['message']['quick_replies'][0]['payload'] .= $brand_suscription_payload;
                 $genericPayload['message']['quick_replies'][1]['payload'] .= $brand_suscription_payload;
 
+                Log::info('generic payload');
+                Log::info($genericPayload);
+
                 $client = new Client();
 
                 $access_token = env("FB_PAGE_ACCESS_TOKEN");
