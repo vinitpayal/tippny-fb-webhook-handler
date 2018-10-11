@@ -38,9 +38,8 @@ class SendPopupWelcomeMessage extends Command
      *
      * @return mixed
      */
-    public function handle()
+    public function handle($try_count = 0)
     {
-        $try_count = 0;
         $delay_in_msg_sending = env('DELAY_IN_MESSAGE_SENDING', 60);
         $users_list_to_send_message = \App\Model\WebhookDump::whereNotNull('brand_id')
             ->where('message_sent', 0)
@@ -120,9 +119,9 @@ class SendPopupWelcomeMessage extends Command
 
         $try_count += 1;
 
-        if($try_count <= 55){
+        if($try_count <= 50){
             sleep(1);
-            $this->handle();
+            $this->handle($try_count);
         }
     }
 
