@@ -133,7 +133,7 @@ class SendPopupWelcomeMessage extends Command
 
             $text_message = sprintf("Hi! This is %s from %s. Thank you for visiting our store! "
                 ."Please tap Add To Favorites 👇 and Get 5%% OFF in your next visit! "
-                ."Receive Coupons and more Special Offers from us right here on Tippny!", $brand_communicator_name, $brand_obj->brand_name);
+                ."Receive Coupons and more Special Offers from us right here on Tippny!", $brand_communicator_name, $brand_obj->name);
 
             $recepient_obj = new \stdClass();
             $recepient_obj->user_ref = $user_ref;
