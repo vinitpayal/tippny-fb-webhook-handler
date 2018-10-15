@@ -28,7 +28,7 @@ class Kernel extends ConsoleKernel
          $schedule->command('message:cart-product')
              ->cron('* * * * * *')->withoutOverlapping();
 
-        $schedule->command('message:popup-welcome')
+        $schedule->command('message:send-popup-welcome-message')
             ->cron('* * * * * *')->withoutOverlapping();
     }
 
