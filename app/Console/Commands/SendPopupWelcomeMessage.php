@@ -113,6 +113,13 @@ class SendPopupWelcomeMessage extends Command
                     $fb_webhook_response->sent_message_id = $message_id;
 
                     $fb_webhook_response->save();
+                    
+                    $intro_msg_log = \App\Model\WelcomeMessageSentDump::insert([
+                        "brand_id" => $brand_id,
+                        "user_ref" => $fb_webhook_response->user_ref,
+                        "message_payload" => json_encode($genericPayload)
+                    ]);
+                    
                 }
             }
         }
@@ -155,6 +162,11 @@ class SendPopupWelcomeMessage extends Command
             $response = $client->request('POST', $fb_page_url, ['json' => $text_msg_payload]);
 
             if($response->getStatusCode() == 200) {
+                $intro_msg_log = \App\Model\WelcomeMessageSentDump::insert([
+                    "brand_id" => $brand_obj->id,
+                    "user_ref" => $user_ref,
+                    "message_payload" => json_encode($text_msg_payload)
+                ]);
                 return true;
             }
 

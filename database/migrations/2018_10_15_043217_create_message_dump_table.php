@@ -13,7 +13,7 @@ class CreateMessageDumpTable extends Migration
      */
     public function up()
     {
-        Schema::create('WelcomeMessageDump', function (Blueprint $table) {
+        Schema::create('welcome_message_dump', function (Blueprint $table) {
             $table->increments('id');
             $table->string('user_ref');
             $table->integer('brand_id');
@@ -30,6 +30,6 @@ class CreateMessageDumpTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('WelcomeMessageDump');
+        Schema::dropIfExists('welcome_message_dump');
     }
 }
