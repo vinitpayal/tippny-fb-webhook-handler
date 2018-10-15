@@ -14,7 +14,7 @@ class SendPopupWelcomeMessage extends Command
      *
      * @var string
      */
-    protected $signature = 'message:popup-welcome';
+    protected $signature = 'message:send-popup-welcome-message';
 
     /**
      * The console command description.
